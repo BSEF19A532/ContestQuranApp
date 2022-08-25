@@ -27,12 +27,17 @@ public class MainActivity extends AppCompatActivity {
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int index = surahNames.SSP[i];
-                int end = surahNames.SSP[i+1];
                 QuranArabicText temp = new QuranArabicText();
-                if (index == 6342) {
+                int index = surahNames.SSP[i];
+                int end;
+                if ( index == surahNames.SSP[ surahNames.SSP.length - 1 ] ) {
                     end = temp.QuranArabicText.length - 1;
                 }
+                else {
+                    end = surahNames.SSP[i+1];
+                }
+
+
                 Intent intent = new Intent(MainActivity.this, SurahActivity.class);
                 intent.putExtra("index", index);
                 intent.putExtra("end", end);
