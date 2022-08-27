@@ -36,8 +36,8 @@ public class SurahActivity extends AppCompatActivity {
                 TextView engTrans = view.findViewById(R.id.eng_trans);
                 TextView urduTrans = view.findViewById(R.id.urdu_trans);
 
-                engTrans.setVisibility(engTrans.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-                urduTrans.setVisibility(urduTrans.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
+                engTrans.setVisibility(engTrans.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+                urduTrans.setVisibility(urduTrans.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
             }
         });
 
