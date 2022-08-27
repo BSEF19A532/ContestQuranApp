@@ -1,7 +1,6 @@
 package com.example.contestquranapp;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,11 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<String> {
+public class CustomAdapter extends ArrayAdapter<AyahListModel> {
 
-    String[] data;
+    ArrayList<AyahListModel> data;
 
-    public CustomAdapter(@NonNull Context context, int resource, String[] data) {
+    public CustomAdapter(@NonNull Context context, int resource, ArrayList<AyahListModel> data) {
         super(context, resource, data);
         this.data = data;
     }
@@ -28,7 +27,10 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.custom_list, null, true);
-        ((TextView) view.findViewById(R.id.custom_txt)).setText(data[position]);
+        AyahListModel item = data.get(position);
+        ((TextView) view.findViewById(R.id.arabic)).setText(item.getArabicText());
+        ((TextView) view.findViewById(R.id.eng_trans)).setText(item.getEngTranslation());
+        ((TextView) view.findViewById(R.id.urdu_trans)).setText(item.getUrduTranslation());
         return view;
     }
 }

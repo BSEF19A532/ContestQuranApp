@@ -18,29 +18,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DBHelper dbHelper = new DBHelper(this.getApplicationContext());
+
         lst = findViewById(R.id.main_list);
         QDH surahNames = new QDH();
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,  surahNames.urduSurahNames);
-        CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_list,  surahNames.urduSurahNames);
+        CustomSurahListAdapter adapter = new CustomSurahListAdapter(this, R.layout.custom_surah_list_item,  dbHelper.getSurahs());
         lst.setAdapter(adapter);
 
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                QuranArabicText temp = new QuranArabicText();
-                int index = surahNames.SSP[i];
-                int end;
-                if ( index == surahNames.SSP[ surahNames.SSP.length - 1 ] ) {
-                    end = temp.QuranArabicText.length - 1;
-                }
-                else {
-                    end = surahNames.SSP[i+1];
-                }
-
-
                 Intent intent = new Intent(MainActivity.this, SurahActivity.class);
-                intent.putExtra("index", index);
-                intent.putExtra("end", end);
+                intent.putExtra("surah_id", i + 1);
                 startActivity(intent);
             }
         });
