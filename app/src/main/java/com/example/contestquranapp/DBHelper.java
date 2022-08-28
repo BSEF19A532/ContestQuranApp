@@ -83,4 +83,33 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public int getSurah(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorCourses = db.rawQuery("SELECT _id FROM tsurah WHERE SurahNameE LIKE ?;", new String[] { "%" + name + "%" });
+        if (!cursorCourses.moveToFirst()) return -1;
+        do {
+            return cursorCourses.getInt(0);
+        } while (cursorCourses.moveToNext());
+    }
+
+    public ArrayList<AyahListModel> getPara(int paraID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorCourses = db.rawQuery(
+                "SELECT ArabicText, FatehMuhammadJalandhri, DrMohsinKhan " +
+                        "FROM tayah " +
+                        "WHERE ParaID = ?;",
+                new String[] { Integer.toString(paraID) });
+        ArrayList<AyahListModel> result = new ArrayList<>();
+        if (!cursorCourses.moveToFirst()) return result;
+        do {
+            AyahListModel item = new AyahListModel(
+                    cursorCourses.getString(0),
+                    cursorCourses.getString(1),
+                    cursorCourses.getString(2)
+            );
+            result.add(item);
+        } while (cursorCourses.moveToNext());
+        return result;
+    }
+
 }

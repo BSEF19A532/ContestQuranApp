@@ -10,24 +10,35 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.contestquranapp.databinding.ActivityMainBinding;
+import com.example.contestquranapp.databinding.ActivitySurahBinding;
+
 import java.util.ArrayList;
 
-public class SurahActivity extends AppCompatActivity {
-
+public class SurahActivity extends DrawerBaseActivity {
+    ActivitySurahBinding activitySurahBinding;
     ListView lst;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activitySurahBinding = ActivitySurahBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_surah);
+        setContentView(activitySurahBinding.getRoot());
 
         Intent intent = getIntent();
         int surahId = intent.getIntExtra("surah_id", 0);
+        int parasId = intent.getIntExtra("paras_id", 0);
 
         DBHelper dbHelper = new DBHelper(this.getApplicationContext());
 
         lst = findViewById(R.id.list_surah);
+        CustomAdapter adapter;
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,  data);
-        CustomAdapter adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getAyahs(surahId) );
+        if ( parasId != 0 ) {
+            adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getPara(parasId) );
+        } else {
+            adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getAyahs(surahId) );
+        }
+
         lst.setAdapter(adapter);
 
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
