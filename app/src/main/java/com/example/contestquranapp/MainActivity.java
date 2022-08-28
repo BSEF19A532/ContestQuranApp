@@ -9,14 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.contestquranapp.databinding.ActivityMainBinding;
 
+public class MainActivity extends DrawerBaseActivity {
+
+    ActivityMainBinding activityMainBinding;
     ListView lst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(activityMainBinding.getRoot());
 
         DBHelper dbHelper = new DBHelper(this.getApplicationContext());
 

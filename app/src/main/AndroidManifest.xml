@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ContestQuranApp">
         <activity
+            android:name=".DrawerBaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".SurahActivity"
             android:exported="false" />
         <activity
