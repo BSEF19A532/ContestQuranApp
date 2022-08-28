@@ -42,6 +42,10 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         drawerLayout.closeDrawer(GravityCompat.START);
         Intent intent;
         switch (item.getItemId()) {
+            case R.id.home_activity_item:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.search_activity_item:
                 intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
