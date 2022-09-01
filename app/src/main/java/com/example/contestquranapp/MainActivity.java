@@ -1,6 +1,8 @@
 package com.example.contestquranapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ public class MainActivity extends DrawerBaseActivity {
 
     ActivityMainBinding activityMainBinding;
     ListView lst;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +28,22 @@ public class MainActivity extends DrawerBaseActivity {
         DBHelper dbHelper = new DBHelper(this.getApplicationContext());
 
         lst = findViewById(R.id.main_list);
-        QDH surahNames = new QDH();
+        recyclerView = findViewById(R.id.main_list_recycler);
+
+        recyclerView.setHasFixedSize(true);
+
+
+//        QDH surahNames = new QDH();
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,  surahNames.urduSurahNames);
-        CustomSurahListAdapter adapter = new CustomSurahListAdapter(this, R.layout.custom_surah_list_item,  dbHelper.getSurahs());
-        lst.setAdapter(adapter);
+
+//        CustomSurahListAdapter adapter = new CustomSurahListAdapter(this, R.layout.custom_surah_list_item,  dbHelper.getSurahs());
+//        lst.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        CustomSurahRecyclerAdapter adapter = new CustomSurahRecyclerAdapter(dbHelper.getSurahs());
+        recyclerView.setAdapter(adapter);
 
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -38,5 +53,6 @@ public class MainActivity extends DrawerBaseActivity {
                 startActivity(intent);
             }
         });
+
     }
 }

@@ -1,23 +1,22 @@
 package com.example.contestquranapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.contestquranapp.databinding.ActivityMainBinding;
 import com.example.contestquranapp.databinding.ActivitySurahBinding;
-
-import java.util.ArrayList;
 
 public class SurahActivity extends DrawerBaseActivity {
     ActivitySurahBinding activitySurahBinding;
     ListView lst;
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         activitySurahBinding = ActivitySurahBinding.inflate(getLayoutInflater());
@@ -31,15 +30,26 @@ public class SurahActivity extends DrawerBaseActivity {
         DBHelper dbHelper = new DBHelper(this.getApplicationContext());
 
         lst = findViewById(R.id.list_surah);
-        CustomAdapter adapter;
+        recyclerView = findViewById(R.id.recyclerView_surah);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SurahActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        CustomRecyclerAdapter adapter;
+
+
+//        CustomAdapter adapter;
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,  data);
         if ( parasId != 0 ) {
-            adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getPara(parasId) );
+//            adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getPara(parasId) );
+            adapter = new CustomRecyclerAdapter(dbHelper.getPara(parasId));
         } else {
-            adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getAyahs(surahId) );
+//            adapter = new CustomAdapter(this, R.layout.custom_list,  dbHelper.getAyahs(surahId) );
+            adapter = new CustomRecyclerAdapter(dbHelper.getAyahs(surahId));
         }
 
-        lst.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+//        lst.setAdapter(adapter);
 
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
